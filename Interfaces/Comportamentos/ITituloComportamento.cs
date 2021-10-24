@@ -2,7 +2,7 @@
 using CadastroTitulo.Enum;
 using System.Collections.Generic;
 
-namespace CadastroTitulo.Interfaces.Comportamento
+namespace CadastroTitulo.Interfaces.Comportamentos
 {
     public interface ITituloComportamento<T> where T : Base
     {       
@@ -12,6 +12,5 @@ namespace CadastroTitulo.Interfaces.Comportamento
         bool Inserir(T titulo);
         T Atualizar(int id, T titulo);
         bool Excluir(int id);
-        int ProximoId();
     }
 }

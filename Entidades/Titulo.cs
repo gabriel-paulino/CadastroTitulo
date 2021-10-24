@@ -1,5 +1,5 @@
 ﻿using CadastroTitulo.Enum;
-using CadastroTitulo.Interfaces.Comportamento;
+using CadastroTitulo.Interfaces.Comportamentos;
 using System.Collections.Generic;
 
 namespace CadastroTitulo.Entidades
@@ -19,6 +19,5 @@ namespace CadastroTitulo.Entidades
         public bool Inserir(T titulo) => TituloComportamento.Inserir(titulo);
         public T Atualizar(int id, T titulo) => TituloComportamento.Atualizar(id, titulo);
         public bool Excluir(int id) => TituloComportamento.Excluir(id);
-        public int ProximoId() => TituloComportamento.ProximoId();
     }
 }

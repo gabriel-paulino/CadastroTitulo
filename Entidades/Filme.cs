@@ -21,6 +21,6 @@ namespace CadastroTitulo.Entidades
         public bool Excluido { get; private set; }
 
         public void DefinirComoExcluido() => Excluido = true;
-
+        
     }
 }
