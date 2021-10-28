@@ -5,6 +5,16 @@ namespace Titulo.Dominio.Entidades
 {
     public class Filme : Base
     {
+        public Filme(Guid id, int genero, string titulo, string descricao, DateTime lancamento, bool excluido)
+        {
+            Id = id;
+            Genero = (Genero)genero;
+            Titulo = titulo;
+            Descricao = descricao;
+            Lancamento = lancamento;
+            Excluido = excluido;
+        }
+
         public Filme(Genero genero, string titulo, string descricao, DateTime lancamento)
         {
             Genero = genero;
@@ -21,6 +31,21 @@ namespace Titulo.Dominio.Entidades
         public bool Excluido { get; private set; }
 
         public void DefinirComoExcluido() => Excluido = true;
-        
+
+        public Filme Atualizar(
+            Genero genero = Genero.NaoInformado, 
+            string titulo = "", 
+            string descricao = "", 
+            DateTime lancamento = new DateTime(),
+            bool excluido = false)
+        {
+            _ = genero == Genero.NaoInformado ? Genero : Genero = genero;
+            _ = string.IsNullOrEmpty(titulo) ? Titulo : Titulo = titulo;
+            _ = string.IsNullOrEmpty(descricao) ? Descricao : Descricao = descricao;
+            _ = lancamento == DateTime.MinValue ? Lancamento : Lancamento = lancamento;
+            Excluido = excluido;
+
+            return this;
+        }      
     }
 }

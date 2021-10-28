@@ -5,6 +5,18 @@ namespace Titulo.Dominio.Entidades
 {
     public class Serie : Base
     {
+        public Serie(Guid id, int genero, string titulo, string descricao, DateTime lancamento, int temporadas, int episodios, bool excluido)
+        {
+            Id = id;
+            Genero = (Genero)genero;
+            Titulo = titulo;
+            Descricao = descricao;
+            Lancamento = lancamento;
+            Temporadas = temporadas;
+            Episodios = episodios;
+            Excluido = excluido;
+        }
+
         public Serie(Genero genero, string titulo, string descricao, DateTime lancamento, int temporadas, int episodios)
         {
             Genero = genero;

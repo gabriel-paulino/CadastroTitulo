@@ -1,18 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using Dapper;
+using System;
+using System.Collections.Generic;
 using Titulo.Dominio.Entidades;
 using Titulo.Dominio.Enum;
 using Titulo.Dominio.Interfaces.Repositorios;
+using Titulo.Repositorio.Data;
 
 namespace Titulo.Repositorio.Repositorios
 {
     public class SerieRepositorio : ISerieRepositorio
     {
-        public Serie Atualizar(int id, Serie serie)
+        private readonly DbSession _session;
+
+        public SerieRepositorio(DbSession session)
+        {
+            _session = session;
+        }
+
+        public bool Atualizar(Serie serieAtualizada)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool Excluir(int id)
+        public bool Excluir(Guid id)
         {
             throw new System.NotImplementedException();
         }
@@ -22,7 +32,7 @@ namespace Titulo.Repositorio.Repositorios
             throw new System.NotImplementedException();
         }
 
-        public Serie Obter(int id)
+        public Serie Obter(Guid id)
         {
             throw new System.NotImplementedException();
         }
@@ -37,9 +47,7 @@ namespace Titulo.Repositorio.Repositorios
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Serie> ObterTodos()
-        {
-            throw new System.NotImplementedException();
-        }
+        public IEnumerable<Serie> ObterTodos() =>
+            _session.Connection.Query<Serie>("SELECT * FROM [Serie]", null, _session.Transaction);
     }
 }

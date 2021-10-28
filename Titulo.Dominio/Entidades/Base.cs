@@ -1,9 +1,14 @@
-﻿namespace Titulo.Dominio.Entidades
+﻿using System;
+
+namespace Titulo.Dominio.Entidades
 {
     public abstract class Base
     {
-        public int Id { get; protected set; }
+        protected Base()
+        {
+            Id = Guid.NewGuid();
+        }
 
-        public void DefinirIdentificador(int id) => Id = id;
+        public Guid Id { get; protected set; }
     }
 }
