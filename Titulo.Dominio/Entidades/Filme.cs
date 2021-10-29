@@ -22,6 +22,8 @@ namespace Titulo.Dominio.Entidades
             Descricao = descricao;
             Lancamento = lancamento;
             Excluido = false;
+
+            RealizarValidacoes();
         }
 
         public Genero Genero { get; private set; }
@@ -36,16 +38,18 @@ namespace Titulo.Dominio.Entidades
             Genero genero = Genero.NaoInformado, 
             string titulo = "", 
             string descricao = "", 
-            DateTime lancamento = new DateTime(),
-            bool excluido = false)
+            DateTime lancamento = new DateTime())
         {
             _ = genero == Genero.NaoInformado ? Genero : Genero = genero;
             _ = string.IsNullOrEmpty(titulo) ? Titulo : Titulo = titulo;
             _ = string.IsNullOrEmpty(descricao) ? Descricao : Descricao = descricao;
             _ = lancamento == DateTime.MinValue ? Lancamento : Lancamento = lancamento;
-            Excluido = excluido;
+
+            RealizarValidacoes();
 
             return this;
-        }      
+        }
+
+        public override void RealizarValidacoes() { }
     }
 }

@@ -23,19 +23,17 @@ namespace Titulo.Repositorio.Repositorios
                         [Genero] = @Genero,
                         [Titulo] = @Titulo,
                         [Descricao] = @Descricao,
-                        [Lancamento] = @Lancamento,
-                        [Excluido] = @Excluido                       
+                        [Lancamento] = @Lancamento                     
                     WHERE [Id] = @Id
                 ";
 
             int linhasAfetadas = _session.Connection.Execute(command, new
             {
-                Id = filmeAtualizado.Id,
+                filmeAtualizado.Id,
                 Genero = (int)(filmeAtualizado.Genero),
-                Titulo = filmeAtualizado.Titulo,
-                Descricao = filmeAtualizado.Descricao,
-                Lancamento = filmeAtualizado.Lancamento,
-                Excluido = filmeAtualizado.Excluido,
+                filmeAtualizado.Titulo,
+                filmeAtualizado.Descricao,
+                filmeAtualizado.Lancamento,
             });
 
             return linhasAfetadas == 1;
@@ -50,7 +48,7 @@ namespace Titulo.Repositorio.Repositorios
                     WHERE [Id] = @Id
                 ";
 
-            int linhasAfetadas = _session.Connection.Execute(command, new { Id = id});
+            int linhasAfetadas = _session.Connection.Execute(command, new { Id = id}, _session.Transaction);
 
             return linhasAfetadas == 1;
         }
@@ -66,12 +64,12 @@ namespace Titulo.Repositorio.Repositorios
 
             int linhasAfetadas = _session.Connection.Execute(command, new
             {
-                Id = filme.Id,
+                filme.Id,
                 Genero = (int)(filme.Genero),
-                Titulo = filme.Titulo,
-                Descricao = filme.Descricao,
-                Lancamento = filme.Lancamento,
-                Excluido = filme.Excluido,
+                filme.Titulo,
+                filme.Descricao,
+                filme.Lancamento,
+                filme.Excluido,
             });
 
             return linhasAfetadas == 1;

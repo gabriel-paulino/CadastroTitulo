@@ -26,6 +26,8 @@ namespace Titulo.Dominio.Entidades
             Temporadas = temporadas;
             Episodios = episodios;
             Excluido = false;
+
+            RealizarValidacoes();
         }
 
         public Genero Genero { get; private set; }
@@ -37,5 +39,7 @@ namespace Titulo.Dominio.Entidades
         public bool Excluido { get; private set; }
         
         public void DefinirComoExcluido() => Excluido = true;
+
+        public override void RealizarValidacoes() { }
     }
 }

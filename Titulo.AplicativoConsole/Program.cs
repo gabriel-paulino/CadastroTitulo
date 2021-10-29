@@ -1,5 +1,8 @@
 ﻿using Aplicacao.Servico;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using Titulo.Dominio.Entidades;
+using Titulo.Dominio.Enum;
 using Titulo.Dominio.Interfaces.Repositorios;
 using Titulo.Dominio.Interfaces.Servicos;
 using Titulo.Repositorio.Data;
@@ -18,7 +21,20 @@ namespace CadastroTitulo
 
             var filmeServico = service.GetService<IFilmeServico>();
 
-            var filmes = filmeServico.ObterTodos();
+
+            string id = "118ED095-2248-4A04-94C6-899C0406FD98";
+
+
+            //var filme = filmeServico.Obter(Guid.Parse(id));
+            var filmes = filmeServico.ObterPorGenero(Genero.Terror);
+
+
+            bool atualizou = filmeServico.Excluir(Guid.Parse(id));
+
+            if (atualizou)
+                Console.WriteLine("atualizou");
+
+            //var filmes = filmeServico.ObterTodos();
         }
 
         private static void RegisterServices() =>

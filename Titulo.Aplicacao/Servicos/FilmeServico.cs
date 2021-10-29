@@ -10,10 +10,14 @@ namespace Aplicacao.Servico
     public class FilmeServico : IFilmeServico
     {
         private readonly IFilmeRepositorio _filmeRepositorio;
+        private readonly IUnitOfWork _uow;
 
-        public FilmeServico(IFilmeRepositorio filmeRepositorio)
+        public FilmeServico(
+            IFilmeRepositorio filmeRepositorio,
+            IUnitOfWork uow)
         {
             _filmeRepositorio = filmeRepositorio;
+            _uow = uow;
         }
 
         public bool Atualizar(Filme filmeAtualizado) => 
@@ -21,10 +25,19 @@ namespace Aplicacao.Servico
 
         public bool Excluir(Guid id)
         {
+            _uow.BeginTransaction();
+
             var filme = _filmeRepositorio.Obter(id);
             filme.DefinirComoExcluido();
 
-            return filme.Excluido;
+            bool filmeExcluido = _filmeRepositorio.Excluir(id);
+
+            if (filmeExcluido)
+                _uow.Commit();
+            else
+                _uow.Rollback();
+
+            return filmeExcluido;
         }
 
         public bool Inserir(Filme filmeNovo) =>
