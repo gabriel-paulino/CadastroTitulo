@@ -34,7 +34,7 @@ namespace Titulo.Dominio.Entidades
 
         public void DefinirComoExcluido() => Excluido = true;
 
-        public Filme Atualizar(
+        public Filme Editar(
             Genero genero = Genero.NaoInformado, 
             string titulo = "", 
             string descricao = "", 

@@ -9,6 +9,7 @@ namespace Titulo.Dominio.Interfaces.Repositorios
     {
         IEnumerable<Serie> ObterTodos();
         IEnumerable<Serie> ObterPorGenero(Genero genero);
+        IEnumerable<Serie> ObterPorTitulo(string titulo);
         bool Inserir(Serie serie);
         bool Atualizar(Serie serieAtualizada);
         bool Excluir(Guid id);

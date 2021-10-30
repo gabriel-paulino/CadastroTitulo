@@ -34,7 +34,9 @@ namespace Titulo.Repositorio.Repositorios
                 filmeAtualizado.Titulo,
                 filmeAtualizado.Descricao,
                 filmeAtualizado.Lancamento,
-            });
+            }, 
+            _session.Transaction
+            );
 
             return linhasAfetadas == 1;
         }
@@ -91,7 +93,7 @@ namespace Titulo.Repositorio.Repositorios
                     [Id] = @Id
             ";
 
-            return _session.Connection.QuerySingleOrDefault<Filme>(query, new {Id = id }, _session.Transaction);
+            return _session.Connection.QuerySingleOrDefault<Filme>(query, new {Id = id });
         }
 
         public IEnumerable<Filme> ObterPorGenero(Genero genero)
@@ -110,7 +112,26 @@ namespace Titulo.Repositorio.Repositorios
                     [Genero] = @Genero
             ";
 
-            return _session.Connection.Query<Filme>(query, new { Genero = (int)genero }, _session.Transaction);
+            return _session.Connection.Query<Filme>(query, new { Genero = (int)genero });
+        }
+
+        public IEnumerable<Filme> ObterPorTitulo(string titulo)
+        {
+            string query = @"
+                SELECT
+                    [Id],
+                    [Genero],
+                    [Titulo],
+                    [Descricao],
+                    [Lancamento],
+                    [Excluido]
+                FROM 
+                    [Filme]
+                WHERE
+                    [Titulo] LIKE @Titulo
+            ";
+
+            return _session.Connection.Query<Filme>(query, new { Titulo = $"{titulo}%" });
         }
 
         public IEnumerable<Filme> ObterTodos()
@@ -127,7 +148,7 @@ namespace Titulo.Repositorio.Repositorios
                     [Filme]
             ";
 
-            return _session.Connection.Query<Filme>(query, null, _session.Transaction);
+            return _session.Connection.Query<Filme>(query, null);
         }
     }
 }

@@ -10,8 +10,9 @@ namespace Titulo.Dominio.Interfaces.Servicos
         IEnumerable<Serie> ObterTodos();
         Serie Obter(Guid id);
         IEnumerable<Serie> ObterPorGenero(Genero genero);
-        bool Inserir(Serie serieNova);
-        bool Atualizar(Serie serieAtualizado);
+        IEnumerable<Serie> ObterPorTitulo(string titulo);
+        Serie Inserir(Serie serie);
+        Serie Atualizar(Guid id, Serie serieAtualizado);
         bool Excluir(Guid id);
     }
 }

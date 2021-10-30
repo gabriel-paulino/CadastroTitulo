@@ -10,8 +10,9 @@ namespace Titulo.Dominio.Interfaces.Servicos
         IEnumerable<Filme> ObterTodos();
         Filme Obter(Guid id);
         IEnumerable<Filme> ObterPorGenero(Genero genero);
-        bool Inserir(Filme filmeNovo);
-        bool Atualizar(Filme filmeAtualizado);
+        IEnumerable<Filme> ObterPorTitulo(string titulo);
+        Filme Inserir(Filme filme);
+        Filme Atualizar(Guid id, Filme filmeAtualizado);
         bool Excluir(Guid id);
     }
 }

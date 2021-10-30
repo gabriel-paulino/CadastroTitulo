@@ -20,30 +20,72 @@ namespace Aplicacao.Servico
             _uow = uow;
         }
 
-        public bool Atualizar(Filme filmeAtualizado) => 
-            _filmeRepositorio.Atualizar(filmeAtualizado);
+        public Filme Atualizar(Guid id, Filme filmeAtualizado)
+        {
+            var filme = _filmeRepositorio.Obter(id);
+
+            if (filme is null)
+            {
+                filmeAtualizado.AdicionarNotificacao("Não existe filme com esse Id");
+                return filmeAtualizado;
+            }
+
+            filme.Editar(
+                genero: filmeAtualizado.Genero,
+                titulo: filmeAtualizado.Titulo,
+                descricao: filmeAtualizado.Descricao,
+                lancamento: filmeAtualizado.Lancamento
+                );
+
+            if (!filme.Valido)
+                return filme;
+
+            _uow.BeginTransaction();
+
+            if (_filmeRepositorio.Atualizar(filme))
+            {
+                _uow.Commit();
+                return filme;
+            }
+                
+            _uow.Rollback();
+            filme.AdicionarNotificacao("Erro ao atualizar filme.");
+
+            return filme;
+        }
+            
 
         public bool Excluir(Guid id)
         {
-            _uow.BeginTransaction();
-
             var filme = _filmeRepositorio.Obter(id);
+
+            if (filme is null)
+                return false;
+
             filme.DefinirComoExcluido();
 
-            bool filmeExcluido = _filmeRepositorio.Excluir(id);
+            _uow.BeginTransaction();
 
-            if (filmeExcluido)
+            bool excluiu = _filmeRepositorio.Excluir(id);
+
+            if (excluiu)
                 _uow.Commit();
             else
                 _uow.Rollback();
 
-            return filmeExcluido;
+            return excluiu;
         }
 
-        public bool Inserir(Filme filmeNovo) =>
-            _filmeRepositorio.Inserir(filmeNovo);
+        public Filme Inserir(Filme filme)
+        {
+            if (!_filmeRepositorio.Inserir(filme))
+                filme.AdicionarNotificacao("Erro ao inserir filme.");
 
-        public IEnumerable<Filme> ObterPorGenero(Genero genero) => 
+            return filme;
+        }
+           
+
+        public IEnumerable<Filme> ObterPorGenero(Genero genero) =>
             _filmeRepositorio.ObterPorGenero(genero);
 
         public Filme Obter(Guid id) =>
@@ -51,5 +93,8 @@ namespace Aplicacao.Servico
 
         public IEnumerable<Filme> ObterTodos() =>
             _filmeRepositorio.ObterTodos();
+
+        public IEnumerable<Filme> ObterPorTitulo(string titulo) =>
+            _filmeRepositorio.ObterPorTitulo(titulo);
     }
 }

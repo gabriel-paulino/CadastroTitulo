@@ -9,6 +9,7 @@ namespace Titulo.Dominio.Interfaces.Repositorios
     {
         IEnumerable<Filme> ObterTodos();
         IEnumerable<Filme> ObterPorGenero(Genero genero);
+        IEnumerable<Filme> ObterPorTitulo(string titulo);
         bool Inserir(Filme filme);
         bool Atualizar(Filme filmeAtualizado);
         bool Excluir(Guid id);
